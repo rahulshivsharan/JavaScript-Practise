@@ -1,0 +1,43 @@
+<html>
+  <head>
+		<title>Call back function demo</title>		
+		<script type="text/javascript">
+			(function(){				
+				
+				var logVal = function(param){
+					if(typeof param === 'string'){
+						alert(" value of string  "+param);
+					}else if(typeof param === 'number'){
+						alert(" the number is  "+param);
+					}else if(typeof param === 'object'){
+						for(var p in param){
+						   alert(p+" : "+param[p]);
+						}
+					}	
+				};
+				
+				var demoCallback = function(param, func){
+					if((typeof param === 'object') && ('length' in param)){ //this condition is just to check whether param is array ?
+						for(var x = 0; x < param.length; x++){
+							func(param[x]);
+						}						
+					}else{
+						alert(" this function only accepts array as an argument ");
+					}					
+				};
+				
+				demoCallback(["Superman",12,34,{
+					name : "Rahul Shivsharan",
+					profession : "Software Developer"
+				}],logVal);
+				
+				demoCallback("Superman",logVal);
+			})();
+			
+			
+		</script>
+  </head>
+  <body>
+		
+  </body>
+</html>
