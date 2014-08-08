@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Custom Filter</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap-theme.css"></link>
+		<script type="text/javascript">					
+			var demoApp =  angular.module("DemoApp",[]);
+			
+			demoApp.filter("makeUpper",function(){
+				return function(item){
+					return item.toUpperCase();
+				
+				};
+			});	
+			
+			demoApp.controller("PersonCntrl",function(){
+				this.firstName = "Snehal";
+				this.lastName = "Gangurde";
+			});				
+		</script>
+	</head>
+	<body>
+		<div ng-app="DemoApp">
+			<div ng-controller="PersonCntrl as person">
+				<p>{{person.firstName}}</p>
+				<p>{{person.lastName | makeUpper }}</p>
+			</div>
+		</div>		
+	</body>		
+</html>
