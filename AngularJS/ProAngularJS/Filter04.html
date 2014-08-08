@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Custom Filter - 04</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap-theme.css"></link>
+		<script type="text/javascript">					
+			var demoApp =  angular.module("DemoApp",[]);
+			
+			demoApp.filter("chkAge",function(){
+				return function(items){
+					var newList = [];
+					
+					angular.forEach(items,function(per){
+						if(per.age < 58){
+							newList.push(per);
+						}
+					});
+					
+					return newList;
+				
+				};
+			});	
+			
+			demoApp.filter("isRetired",function(){
+				return function(persons){
+					var newList = [];
+					
+					angular.forEach(persons,function(per){
+						if(per.age >= 58){
+							newList.push(per);
+						}
+					});
+					
+					return newList;
+				};
+			});
+			
+			demoApp.controller("PersonCntrl",function(){
+				this.listPerson = [
+					{ empName : "Babu Lal", age : 23},
+					{ empName : "Chandu Marathe", age : 43},
+					{ empName : "Nandan Shive", age : 56},
+					{ empName : "Sagar Gote", age : 54},
+					{ empName : "Baban Gajbhiye", age : 34},
+					{ empName : "Aslam Shaikh", age : 67},
+					{ empName : "Praful Naik", age : 64},
+					{ empName : "Rakesh Patel", age : 59},
+					{ empName : "Ninad Pandhare", age : 48}
+				];
+			});				
+		</script>
+	</head>
+	<body>
+		<div ng-app="DemoApp">
+			<div ng-controller="PersonCntrl as cntrl">
+				<table>
+					<thead>
+						<caption>Yet to be Retired</caption>
+						<tr>
+							<th>EMPLOYEE-NAME</th>
+							<th>AGE</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="person in cntrl.listPerson | chkAge | orderBy : 'age'">
+							<td>{{person.empName}}</td>
+							<td>{{person.age}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<br/>
+				<br/>
+				<table>
+					<thead>
+						<caption>Are Retired</caption>
+						<tr>
+							<th>EMPLOYEE-NAME</th>
+							<th>AGE</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="person in cntrl.listPerson | isRetired | orderBy : 'age'">
+							<td>{{person.empName}}</td>
+							<td>{{person.age}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>		
+	</body>		
+</html>
