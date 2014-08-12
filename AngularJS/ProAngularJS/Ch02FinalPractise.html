@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html ng-app="MyFirstAPP">
+	<head>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap-theme.css"></link>
+		<script type="text/javascript">
+			var myObj = {
+				empList : [
+					{ name : "Mohit Chauhan", age : 23 },
+					{ name : "Nikhil Pradhan", age : 45 },
+					{ name : "Swapnil Joshi", age : 57 }
+				]
+			};
+			
+			var EmployeeApp = angular.module("MyFirstAPP",[]);
+			
+			EmployeeApp.filter("retireFilter",function(){
+				return function(empList,showAll){
+					var myList = [];
+					
+					angular.forEach(empList,function(emp){
+						if(emp.age < 50 || showAll == true){
+							myList.push(emp);
+						}						 
+					});
+					return myList;
+				}
+			});
+			
+			EmployeeApp.controller("EmployeeCntrl",function($scope){
+				
+				$scope.employDB = myObj;
+				
+				$scope.addEmployee = function(empName, empAge){
+					$scope.employDB.empList.push({ name : empName, age : empAge});
+					$scope.InputEmployeeName = "";
+					$scope.InputEmployeeAge = "";
+				}	
+			});
+		</script>
+		<style type="text/css">
+			#tbl{
+				width : 50%;				
+			}
+			
+		</style>
+	</head>
+	<body ng-controller="EmployeeCntrl">
+		<div class="page-header">
+			<h1>Enter Employee</h1>
+		</div>
+		<div class="panel">
+			<div>
+				<input type="text" ng-model="InputEmployeeName" /> Name
+				<input type="text" ng-model="InputEmployeeAge" /> Age
+				<span>
+					<button ng-click="addEmployee(InputEmployeeName,InputEmployeeAge)">Add</button>
+				</span>
+			</div>			
+			<table id="tbl" class="table table-striped">				
+				<thead>
+					<th>Employee-ID</th>
+					<th>Age</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="emp in employDB.empList | retireFilter : showAll | orderBy : 'name' ">
+						<td>{{emp.name}}</td>
+						<td>{{emp.age}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="checkbox-inline">
+				<label>
+					<input type="checkbox"  ng-model="showAll" /> Show All
+				</label>
+			</div>
+		</div>		
+	</body>
+</html>
