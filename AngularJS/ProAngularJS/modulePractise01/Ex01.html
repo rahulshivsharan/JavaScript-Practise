@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Recipe 02 example 01</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>						
+		<script type="text/javaScript">
+			angular.module("StudentListApp",['TopCollege']);
+		</script>
+		<script type="text/javascript" src="StudentListApp.js"></script>
+		<script type="text/javascript" src="topGrade.js"></script>
+	</head>
+	<body ng-controller="StudentListCntrl" ng-app="StudentListApp">
+		<table>
+			<thead>
+				<th>Name</td>
+				<th>Course</td>
+				<th>College</td>
+				<th>Grade</td>
+			</thead>
+			<tbody>
+				<tr ng-repeat="student in data | isAGrade : AGrade | orderBy : 'name' | unique : 'College'">
+					<td>{{student.name}}</td>
+					<td>{{student.major}}</td>
+					<td>{{student.College}}</td>
+					<td>{{student.Grade}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<input type="checkbox" ng-model="AGrade" /> Only A Grade ?
+	</body>		
+</html>
