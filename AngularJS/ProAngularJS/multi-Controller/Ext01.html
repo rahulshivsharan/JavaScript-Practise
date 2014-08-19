@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Recipe 02 example 01</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>						
+		<script type="text/javaScript">
+			angular.module("StudentListApp",['TopCollege']);
+		</script>
+		<script type="text/javascript" src="StudentListApp.js"></script>
+		<script type="text/javascript" src="topGrade.js"></script>
+		<script type="text/javascript" src="EditStudentCntrl.js"></script>
+	</head>
+	<body ng-controller="StudentListCntrl" ng-app="StudentListApp">
+		<div ng-controller="EditStudentCntrl">
+			<table>
+				<thead>
+					<th>Name</td>
+					<th>Course</td>
+					<th>College</td>
+					<th>Grade</td>
+					<th>Edit</td>
+				</thead>
+				<tbody>
+					<tr ng-repeat="student in data | isAGrade : AGrade | orderBy : 'name' ">
+						<td>{{student.name}}</td>
+						<td>{{student.major}}</td>
+						<td>{{student.College}}</td>
+						<td>{{student.Grade}}</td>
+						<td><a  ng-click="editStudent(student)" href="#">Edit</a></td>
+					</tr>
+				</tbody>
+			</table>
+			<input type="checkbox"  ng-model="AGrade" /> Only A Grade ?
+			<table ng-show="isEdit" class="ng-hide">
+				<tr>
+					<td align="right">Name</td>
+					<td align="left">
+						<input type="text" ng-model="selectedStudent.name" />
+					</td>
+				</tr>
+				<tr>	
+					<td align="right">Major</td>
+					<td align="left">
+						<input type="text" ng-model="selectedStudent.major" />
+					</td>
+				</tr>
+				<tr>	
+					<td align="right">College</td>
+					<td align="left">
+						<input type="text" ng-model="selectedStudent.College" />
+					</td>
+				</tr>
+				<tr>	
+					<td align="right">Grade</td>
+					<td align="left">
+						<input type="text" ng-model="selectedStudent.Grade" />
+					</td>
+				</tr>
+				<tr>
+					<td align="right" colspan="2">
+						<input type="button" value="Enter" ng-click="saveEdit()" />
+					</td>
+				</tr>
+			</table>
+		</div>
+	</body>		
+</html>
