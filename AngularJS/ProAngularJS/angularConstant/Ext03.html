@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Filter in Controller</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>		
+		<script type="text/javaScript">
+			angular.module("StudentListApp",[])
+		</script>
+		<script src="StudentListAppThree.js" type="text/javaScript"></script>
+		<style type="text/css">
+			.showAltert{
+				background-color : red;
+				color : white;
+			}
+			.showSuccess{
+				background-color : green;
+				color : white;
+			}
+		</style>
+	</head>
+	<body ng-controller="StudentListCntrl" ng-app="StudentListApp">
+		<table>
+				<thead>
+					<th>Name</td>
+					<th>Course</td>
+					<th>College</td>
+					<th>Grade</td>					
+				</thead>
+				<tbody>
+					<tr ng-repeat="student in data" ng-class="gradClass(student)">
+						<td>{{student.name}}</td>
+						<td>{{student.major}}</td>
+						<td>{{student.College}}</td>
+						<td>{{student.Grade}}</td>						
+					</tr>
+				</tbody>
+		</table>
+	</body>		
+</html>
