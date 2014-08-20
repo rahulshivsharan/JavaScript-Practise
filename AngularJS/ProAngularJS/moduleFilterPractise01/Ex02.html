@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Filter in Controller</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\js\bootstrap.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap-theme.css"></link>
+		<script type="text/javaScript">
+			angular.module("StudentListAppTwo",[])
+		</script>
+		<script src="StudentListAppTwo.js" type="text/javaScript" ></script>
+	</head>
+	<body ng-controller="StudentListCntrl" ng-app="StudentListAppTwo">
+		<table>
+				<thead>
+					<th>Name</td>
+					<th>Course</td>
+					<th>College</td>
+					<th>Grade</td>					
+				</thead>
+				<tbody>
+					<tr ng-repeat="student in data | filter : gradeFilterFn ">
+						<td>{{student.name}}</td>
+						<td>{{student.major}}</td>
+						<td>{{student.College}}</td>
+						<td>{{student.Grade}}</td>						
+					</tr>
+				</tbody>
+		</table>
+	</body>		
+</html>
