@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Filter in Controller</title>		
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>		
+		<script type="text/javaScript">
+			angular.module("StudentListApp",['PaginationModule']);
+		</script>
+		<script src="StudentListAppFour.js" type="text/javaScript"></script>
+		<script src="paginationFilter.js" type="text/javaScript"></script>		
+	</head>
+	<body ng-controller="StudentListCntrl" ng-app="StudentListApp">
+		<table>
+				<thead>
+					<th>ID</th>
+					<th>Name</td>
+					<th>Course</td>
+					<th>College</td>
+					<th>Grade</td>					
+				</thead>
+				<tbody>
+					<tr ng-repeat="student in data | paginationFilter:studentFirstIndex:studentsPerPage">
+						<td>
+							<strong>{{student.id}}</strong>
+						</td>
+						<td>{{student.name}}</td>
+						<td>{{student.major}}</td>
+						<td>{{student.College}}</td>
+						<td>{{student.Grade}}</td>						
+					</tr>
+					<tr align="center">
+						<td colspan="4">
+							<input id="prevBTN" type="button" value="<" ng-click="getPrevBatch()" ng-disabled="isPrev" />
+							<input id="nextBTN" type="button" value=">" ng-click="getNextBatch()" ng-disabled="isNext" />
+						</td>						
+					</tr>	
+				</tbody>				
+		</table>
+	</body>		
+</html>
