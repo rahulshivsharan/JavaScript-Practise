@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp">
+	<head>
+		<title>Recipe 02 example 01</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\js\bootstrap.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap-theme.css"></link>
+		<script type="text/javaScript">
+			angular.module("MyApp",[]).controller("SchoolCntrl",function($scope){
+				this.schoolList = [
+					{ name : "Vidya Niketan School"},
+					{ name : "Amrut Vidyalaya"},
+					{ name : "St. Mary's School"}
+				];
+				
+				this.add = function(){
+					//console.log("school Name : "+this.schoolName);
+					this.schoolList.push({
+						name : this.schoolName
+					});
+					this.schoolName = "";	
+				}
+			}).controller("CollegeCntrl",function($scope){
+				this.collegeList = [
+					{ name : "Graham's Institute of Techology" },
+					{ name : "Booth's College of Arts" },
+					{ name : "Delhi College of Commerce" }
+				];
+				
+				this.add = function(){
+					this.collegeList.push({
+						name : this.collegeName
+					});
+					this.collegeName="";
+				}
+			});			
+		</script>
+	</head>
+	<body>
+		<body>
+			<div class="container" ng-controller="SchoolCntrl as schoolCntrl">
+				<div class="page-header">
+					<h3>Controller Inheritance</h3>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<form role="form">
+							<div class="row">
+								<div class="col-md-10">
+									<input type="text" id="schoolName" ng-model="schoolCntrl.schoolName" class="form-control" placeholder="School-Name" />
+								</div>
+								<div class="col-md-2">
+									<button type="submit" for="schoolName" ng-click="schoolCntrl.add()" class="btn btn-primary">Submit</button>
+								</div>
+							</div>
+						</form>							
+						<br />
+						<ul class="list-group">
+							<li class="list-group-item" ng-repeat="school in schoolCntrl.schoolList">
+								<strong>{{school.name}}</strong>
+							</li>
+						</ul>
+					</div>					
+				</div>
+				<div class="row" ng-controller="CollegeCntrl as collegeCntrl">	
+					<div class="col-md-6">
+					<form role="form">
+							<div class="row">
+								<div class="col-md-10">
+									<input type="text" id="collegeName" ng-model="collegeCntrl.collegeName" class="form-control" placeholder="College-Name" />
+								</div>
+								<div class="col-md-2">
+									<button type="submit" for="collegeName" ng-click="collegeCntrl.add()" class="btn btn-primary">Submit</button>
+								</div>
+							</div>
+						</form>							
+						<br />
+						<ul class="list-group">
+							<li class="list-group-item" ng-repeat="college in collegeCntrl.collegeList">
+								<strong>{{college.name}}</strong>
+							</li>
+						</ul>
+						<ul class="list-group">
+							<li class="list-group-item" ng-repeat="school in schoolCntrl.schoolList">
+								<strong>{{school.name}}</strong>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</body>
+	</body>		
+</html>
