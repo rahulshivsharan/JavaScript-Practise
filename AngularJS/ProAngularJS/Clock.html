@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="clockApp">
+	<head>
+		<title>Clock Module</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\js\bootstrap.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap-theme.css"></link>
+		<script type="text/javaScript">
+			angular.module("clockApp",[]).controller("clockCtrl",function($scope){
+				var updateClock = function(){
+					var d = new Date();
+					$scope.date_Time =  d.toDateString()+" "+d.toLocaleTimeString();
+				}
+				
+				setInterval(function(){
+					$scope.$apply(updateClock);
+				},1000);
+				
+				updateClock();
+			});
+		</script>
+	</head>
+	<body ng-controller="clockCtrl">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">&nbsp;</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">&nbsp;</div>
+			</div>
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8 col-md-offset-2">
+					<div class="jumbotron">
+						<h1 class="text-center">{{date_Time}}</h1>
+					</div>
+				</div>				
+			</div>
+		</div>
+	</body>		
+</html>
