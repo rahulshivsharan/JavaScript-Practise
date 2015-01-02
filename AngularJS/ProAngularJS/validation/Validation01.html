@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myModule">
+	<head>
+		<title>AngularJS Validation example 01</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<style type="text/css">
+			
+			#defaultValidationClassesPart .ng-invalid{
+				border: solid red 3px;
+			}
+
+			#customValidationClassesPart .invalidItem{
+				border: dashed red 2px;
+			}
+
+			.invalidClass{
+				border: solid red 3px;
+			}
+
+			.invalidMsg{
+				color:red;
+				font-weight : bold;
+			}
+		</style>
+		<script type="text/javaScript">
+			var studentCntrl = function($scope){
+				$scope.createStudent = function(isDataValid){
+					if(isDataValid){
+						console.log("Data is Valid");
+					}else{
+						console.log("Data is In-Valid");
+					}
+				}
+			}
+
+			var employeeCntrl = function($scope){
+				$scope.createEmp = function(isDataValid){
+					if(isDataValid){
+						console.log("Employee data submited successfully");
+					}else{
+						console.log("Employee data with error");
+					}
+				}
+			}
+
+			var salaryCntrl = function($scope){
+				$scope.getValidationCSSClass = function(item){
+					return {
+						invalidItem : item.$invalid
+					}
+				}
+			}
+
+			angular.module("myModule",[])
+					.controller("studentCntrl",studentCntrl)
+					.controller("employeeCntrl",employeeCntrl)
+					.controller("salaryCntrl",salaryCntrl);
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="page-header">
+				<h3>Validation Basics in Angular JS</h3>
+			</div>
+			<div class="page-body">
+				<div class="row" ng-controller="studentCntrl"><!-- First Row -->
+					<div class="col-md-4 col-md-offset-4">
+						<form class="form-horizontal" name="studentForm" ng-submit="createStudent(studentForm.$valid)" novalidate>
+							<div class="form-group">
+								<label for="studentAge" class="col-md-5 control-label">Student Age</label>
+								<div class="col-md-7">
+									<input	type="text"
+											class="form-control"											
+											id="studentAge" 
+											ng-model="studentAge"
+											ng-pattern="/^[0-9]*$/"
+											name="studentAge" />
+									<p ng-if="studentForm.studentAge.$error.pattern" class="invalidMsg">Invalid Age</p>		
+								</div>								
+							</div>
+							<div class="form-group">
+								<label for="studentAgeRequired" class="col-md-5 control-label">Student Age <span style="color:red;font-size:1.5em;">*</span></label>
+								<div class="col-md-7">
+									<input	type="text" 
+											class="form-control" 
+											ng-class="{'invalidClass' : studentForm.studentAgeRequired.$invalid && studentForm.studentAgeRequired.$dirty }"
+											id="studentAge" 
+											ng-model="studentAgeRequired"
+											ng-pattern="/^[0-9]*$/"
+											name="studentAgeRequired" required />
+									<p 	ng-if="studentForm.studentAgeRequired.$invalid && studentForm.studentAgeRequired.$dirty" 
+										class="invalidMsg">Invalid Age</p>	
+								</div>								
+							</div>
+							<div class="form-group">
+								<div class="col-md-7 col-md-offset-5">
+									<button type="submit" class="btn btn-default">Submit</button>
+								</div>
+							</div>
+						</form>	
+					</div>
+				</div><!-- First Row -->				
+				<div class="row" ng-controller="employeeCntrl"><!-- Second Row -->
+					<div class="col-md-4 col-md-offset-4">
+						<form class="form-horizontal" name="employeeForm" id="defaultValidationClassesPart" ng-submit="createEmp(employeeForm.$valid)" novalidate>
+							<div class="form-group">
+								<label for="employeeName" class="col-md-5 control-label">Employee Name <span style="color:red;font-size:1.5em;">*</span></label>
+								<div class="col-md-7">
+									<input	type="text"
+											class="form-control"											
+											id="employeeName" 
+											ng-model="employeeName"
+											ng-maxlength="5"											
+											name="employeeName"
+											required/>
+									<p ng-if="employeeForm.employeeName.$error.required" class="invalidMsg">Name Required</p>
+									<p 	ng-if="employeeForm.employeeName.$error.maxlength" class="invalidMsg">Length of name not more than 5</p>			
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="empSalary" class="col-md-5 control-label">Employee Salary</label>
+								<div class="col-md-7">
+									<input	type="text" 
+											class="form-control"										
+											id="empSalary" 
+											ng-model="empSalary"
+											ng-pattern="/^[0-9]*$/"
+											name="empSalary" />
+									<p 	ng-if="employeeForm.empSalary.$error.pattern" class="invalidMsg">Invalid Salary</p>									
+								</div>								
+							</div>
+							<div class="form-group">
+								<div class="col-md-7 col-md-offset-5">
+									<button type="submit" class="btn btn-default">Submit</button>
+								</div>
+							</div>		
+						</form>
+					</div>
+				</div><!-- Second Row -->
+				<div class="row" ng-controller="salaryCntrl"><!-- Third Row -->
+					<div class="col-md-4 col-md-offset-4">
+						<form class="form-horizontal" name="salaryForm" id="customValidationClassesPart" ng-submit="createSalary(employeeForm.$valid)" invalidate>
+							<div class="form-group">
+								<label for="salaryAmt" class="col-md-5 control-label">Salary Amount <span style="color:red;font-size:1.5em;">*</span></label>
+								<div class="col-md-7">
+									<input 	type="text" 
+											class="form-control" 
+											id="salaryAmt" 
+											ng-model="salaryAmt" 
+											ng-pattern="/^[0-9]*$/" 
+											name="salaryAmt" 
+											required />
+									<p ng-if="salaryForm.salaryAmt.$error.required" class="invalidMsg">Salary Required</p>	
+									<p ng-if="salaryForm.salaryAmt.$error.pattern" class="invalidMsg">Salary in Numeric</p>		
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="pancardNo" class="col-md-5 control-label">Pancard No</label>
+								<div class="col-md-7">
+									<input 	type="text" 
+											class="form-control" 
+											id="pancardNo" 
+											ng-model="pancardNo" 
+											ng-pattern="^[a-zA-Z0-9]*$" 
+											name="pancardNo"
+											ng-required="salaryAmt > 10000"
+											ng-class="getValidationCSSClass(salaryForm.pancardNo)"  />
+									<p ng-if="salaryForm.pancardNo.$invalid" class="invalidMsg">Pancard No Required if salary greated than 10,000</p>			
+								</div>
+							</div>
+						</form>
+					</div>
+				</div><!-- Third Row -->
+			</div>
+		</div>
+	</body>		
+</html>
