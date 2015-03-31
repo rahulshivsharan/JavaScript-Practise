@@ -71,4 +71,30 @@ var fn30 = function(){
 		}
 	};
 	
-	fn32();
+	//fn32();
+	
+	var fn33 = function(){
+		var prop = undefined;
+		
+		Function.prototype.method = function(methodName,callbackFn){
+			this.prototype[methodName] = callbackFn;			
+			return this;
+		};
+		
+		var Student = function(){}
+		Student.method("add",function(){
+			return "new Student Added ";
+		}).method("update",function(){
+			return "Updated student";
+		}).method("delete",function(){
+			return "Student deleted";
+		});
+		
+		var studentObj = new Student();
+		
+		for(prop in studentObj){
+			print(prop+" "+studentObj[prop]());			
+		}
+	};
+	
+	fn33();
