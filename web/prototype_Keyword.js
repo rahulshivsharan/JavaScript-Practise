@@ -98,3 +98,31 @@ var fn30 = function(){
 	};
 	
 	fn33();
+	
+	var fn34 = function(){
+		var Person = function(name,age){
+			this.name = name;
+			this.age = age;
+		};
+		
+		Person.prototype = {
+			getName : function(){
+				return this.name;
+			},
+			getAge : function(){
+				return this.age;
+			}
+		}
+		
+		var alice = new Person("Alice Valkyr",23);
+		var steven = new Person("Steven Shindler",43);
+		
+		Person.prototype.getInfo = function(){
+			return "Hi "+this.getName()+" aging "+this.getAge()+" !!!";
+		};
+		
+		print(alice.getInfo());
+		print(steven.getInfo());
+	};
+	
+	fn34();
