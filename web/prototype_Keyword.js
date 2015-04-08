@@ -190,4 +190,45 @@ var fn30 = function(){
 		
 	};
 	
-	fn42();
+	//fn42();
+	
+	var fn43 = function(){
+		
+		var Student = function(){
+			var name = "";
+			this.setName = function(firstName){
+				name = firstName;
+			};
+			
+			this.getName = function(){
+				return name;
+			};
+		};
+		
+		var studentObj_1 = new Student();
+		studentObj_1.setName("Rahul");
+		
+		
+		Student.prototype = {
+			setLastName : function(lastName){
+				var fullName = this.getName() + " "+lastName;
+				this.setName(fullName);
+			}
+		}
+		
+		var studentObj_2 = new Student();
+		studentObj_2.setName("Narayan");
+		studentObj_2.setLastName("Natarajan");
+		
+		studentObj_1.__proto__.setLastName = function(lastName){
+				var fullName = this.getName() + " --> "+lastName;
+				this.setName(fullName);
+		}
+		studentObj_1.setLastName("Shivsharan");
+		
+		print(studentObj_1.getName()); // output is "Rahul --> Shivsharan"
+		print(studentObj_2.getName()); // output is "Narayan Natarajan"
+	};
+	
+	fn43();
+	
