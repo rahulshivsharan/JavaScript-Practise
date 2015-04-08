@@ -126,3 +126,68 @@ var fn30 = function(){
 	};
 	
 	fn34();
+
+	var fn41 = function(){
+		
+		var Student = function(){
+			var name = "";
+			this.setName = function(firstName){
+				name = firstName;
+			};
+			
+			this.getName = function(){
+				return name;
+			};
+		};
+		
+		var studentObj = new Student();
+		studentObj.setName("Rahul");
+		
+		/*
+		Student.prototype = {
+			setLastName : function(lastName){
+				var fullName = this.getName() + " "+lastName;
+				this.setName(fullName);
+			}
+		}
+		// we are overriding the prototype object and hence we get an error when we try to do studentObj.setLastName, method 'setLastName' we are not able to find 
+		*/
+		
+		
+		Student.prototype.setLastName = function(lastName){
+				var fullName = this.getName() + " "+lastName;
+				this.setName(fullName);
+		}
+		
+		
+		studentObj.setLastName("Shivsharan");
+		
+		print(studentObj.getName());
+	};
+	
+	fn41();
+	
+	var fn42 = function(){
+		var MyClass = function(val){
+			this.propOne = val;
+		};
+		
+		var myObj_1 = new MyClass("ABC");
+		
+		MyClass.prototype.getPropOne = function(){
+			return this.propOne;
+		};		
+		var myObj_2 = new MyClass("DEF");
+		print(myObj_1.getPropOne());
+		print(myObj_2.getPropOne());
+		
+		myObj_1.__proto__.getPropNew = function(){
+			return "This is new Method "+this.getPropOne();
+		}
+		// The above code add method getPropNew to prototype chain for function MyClass so it is available in both object
+		print(myObj_1.getPropNew());
+		print(myObj_2.getPropNew());
+		
+	};
+	
+	fn42();
