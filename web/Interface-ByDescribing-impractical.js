@@ -37,10 +37,6 @@ var fn65 = function(){
 			this.implementsInterface = ['BaseDAO'];
 		}
 		
-		var CustomerDAO = function(){
-			this.implementsInterface = ['BaseDAO'];
-		};
-			
 		var addDAO = function(daoInstance){
 			if(!_implements(daoInstance,'BaseDAO')){
 				throw new Error("Object does not implements required Interface");
