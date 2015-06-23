@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+	<head>
+		<title>Publisher Subscriber</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\js\bootstrap.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap-theme.css"></link>
+		<script type="text/javaScript">
+			//angular.module("myApp",['']);
+			angular.module("myApp",[]).factory("NotificationService",function($rootScope){
+				return {
+					notify : function(){
+						$rootScope.$emit("notify-event-service");
+					},
+					subscribe : function(scope,callback){
+						var handler = $rootScope.$on("notify-event-service",callback);
+						scope.$on("$destroy",handler);
+					},
+					count : 0
+				};
+			}).controller("MyCtrlOne",function($scope,NotificationService){
+				
+				$scope.doIt = function(){					
+					NotificationService.notify();
+				};
+				
+			}).controller("MyCtrlTwo",function($scope,NotificationService){
+				$scope.notification = NotificationService.count;
+				
+				NotificationService.subscribe($scope,function(){					
+					NotificationService.count++;
+					$scope.notification = NotificationService.count;
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div class="container">			
+			<div class="row" style="padding-top:5%">
+				<div class="col-md-3" ng-controller="MyCtrlOne">
+					<button class="btn btn-default" ng-click="doIt()">Notify</button>
+				</div>
+				<div class="col-md-3" ng-controller="MyCtrlTwo">
+					<h2 class="label label-success">{{notification}}</h2>
+				</div>
+			</div>
+		</div>
+	</body>		
+</html>
