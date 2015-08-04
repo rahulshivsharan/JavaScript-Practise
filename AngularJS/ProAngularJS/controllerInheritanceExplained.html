@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+	<head>
+		<title>Recipe 02 example 01</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<script type="text/javaScript">
+			angular.module("myApp",[]);
+			
+			(function(){
+				angular.module("myApp").controller("ParentCtrl",ParentCtrl);
+				angular.module("myApp").controller("ChildCtrl",ChildCtrl);
+				
+				function ParentCtrl($scope){
+					$scope.obj = new Object();
+					$scope.obj.lastName = "Shivsharan";
+				};
+				
+				function ChildCtrl($scope){
+					//$scope.obj = new Object();
+					if("obj" in $scope){
+						$scope.obj.firstName = "Rahul";
+					}else{
+						$scope.obj = new Object();
+						$scope.obj.firstName = "Ninad";
+					}
+					
+				};
+			})();
+		</script>
+	</head>
+	<body>
+		<div ng-controller="ParentCtrl">
+			<div ng-controller="ChildCtrl">
+				<h4>Full name is {{obj.firstName + " "+ obj.lastName}}</h4>
+			</div>
+		</div>
+		<div ng-controller="ChildCtrl">
+			<h3>New : {{obj.firstName}}</h3>
+		</div>
+	</body>		
+</html>
