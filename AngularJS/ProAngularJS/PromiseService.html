@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp">
+	<head>
+		<title>Recipe 02 example 01</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\js\bootstrap.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap-theme.css"></link>
+		<script type="text/javaScript">
+			angular.module("MyApp",[]);
+			(function(){
+				angular.module("MyApp").controller("myCtrlOne",myCtrlOne)
+									   .controller("myCtrlTwo",myCtrlTwo);
+				
+				function myCtrlOne(storedValue){
+					var obj = this;					
+					obj.myVal = undefined;
+					
+					storedValue.get().then(function(value){						
+						obj.myVal = value;
+					});
+					
+				};
+				
+				function myCtrlTwo(storedValue){
+					var obj = this;
+					obj.myVal = undefined;
+					
+					storedValue.get().then(function(value){						
+						obj.myVal = value;
+					});
+				};
+				
+				
+			})();
+			
+			(function(){
+				angular.module("MyApp").factory("storedValue",storedValue);
+				
+				function storedValue($q){
+					var obj = { get : fn },
+						promise = undefined;
+					
+					return obj;
+					
+					function fn(){
+						//return promise || getData();
+						return  getData();
+						
+						function getData(){
+							promise = $q.when({
+								label : 'Hello',
+								value : 1000
+							});
+							
+							return promise;
+						};
+					};
+				}
+			})();
+		</script>
+	</head>
+	<body>
+		<div ng-controller="myCtrlOne as one">
+			<h2>One</h2>
+			<label for="">Stored Value:</label>{{one.myVal | json}} <br/>
+			Value: <input  type='text' ng-model='one.myVal.value' />
+		</div>
+		
+		
+		
+		<div ng-controller="myCtrlTwo as two">
+			<h2>Two</h2>
+			<label for="">Stored Value:</label>{{two.myVal | json}} <br/>
+		</div>
+	</body>		
+</html>
