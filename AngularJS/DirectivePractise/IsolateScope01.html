@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp">
+	<head>
+		<title>Recipe 02 example 01</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\js\bootstrap.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap-theme.css"></link>
+		<script type="text/javaScript">
+			angular.module("MyApp",[]);
+			
+			(function(){
+				angular.module("MyApp").controller("myCtrl",myCtrl);
+				angular.module("MyApp").directive("bbString",bbString);
+				angular.module("MyApp").directive("bbTwoString",bbTwoString);
+				angular.module("MyApp").directive("bbExpression",bbExpression);
+				
+				function myCtrl($scope){
+					$scope.actorName = "Jim Carry";
+				};
+				
+				function bbString(){
+					var obj = {
+						scope : {
+							name : "@abbraKaDabraa"
+						},
+						template : "<input ng-model='name' />"	
+					}
+					
+					return obj;
+				};
+				
+				function bbTwoString(){
+					var obj = {
+						scope : {
+							name : "=theName"
+						},
+						template : "<input ng-model='name' />"	
+					}
+					return obj;
+				};
+				
+				function bbExpression(){
+					var obj = {
+						scope : { term : "&" },
+						template : "<input ng-model='term' />",
+						link : function(scope,element,attrs){							
+							scope.term = scope.term();
+						}
+					}
+
+					return obj;	
+				}
+			})();
+		</script>
+	</head>
+	<body ng-controller="myCtrl">
+		<div class="container">
+			<div class="well">
+				<div bb-string abbra-ka-dabraa="{{actorName}}"></div>
+				<p><b>{{actorName}}</b></p>
+				<div bb-expression term="newTerm = actorName + ' Some Extra content'"></div>	
+				<br/>
+				<div bb-two-string the-name="actorName"></div>
+			</div>
+		</div>		
+	</body>		
+</html>
