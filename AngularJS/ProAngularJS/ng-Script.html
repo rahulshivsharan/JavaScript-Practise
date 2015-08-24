@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MainModule">
+	<head>
+		<title>Tabbed Menu using AngularJS</title>
+		<script type="text/javascript" src="C:\Dump\Installer\angular-1.2.23\angular-1.2.23\angular.js"></script>
+		<script type="text/javascript" src="C:\Dump\Installer\angular-1.2.23\angular-1.2.23\angular-animate.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\js\bootstrap.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap-theme.css"></link>
+		<script type="text/javaScript">
+		angular.module("MainModule",[]).controller("myCntrl",function($scope){
+			$scope.isUbuntu = false;
+			$scope.isCentOS = false;
+			$scope.isWindows = false;
+
+			$scope.setClicked = function(os){
+				if(os == "Ubuntu"){
+					$scope.isUbuntu = true;
+					$scope.isCentOS = false;
+					$scope.isWindows = false;					
+				}else if(os == "CentOS"){
+					$scope.isUbuntu = false;
+					$scope.isCentOS = true;
+					$scope.isWindows = false;					
+				}else if(os == "Windows"){
+					$scope.isUbuntu = false;
+					$scope.isCentOS = false;
+					$scope.isWindows = true;					
+				}else{
+					$scope.isUbuntu = false;
+					$scope.isCentOS = false;
+					$scope.isWindows = false;					
+				}
+			}
+		});
+		</script>
+	</head>
+	<body ng-controller="myCntrl">
+		<div class="container">
+			<div class="page-header">
+					<h3>Tabbed Menu using AngularJS</h3>
+			</div>
+			<div class="row">
+				<div class="col-md-offset-4 col-md-4 col-md-offset-4">
+					<div class="row">
+						<div class="col-md-4">
+							<input 	type="button" 
+									ng-class="{'btn btn-default' : !isUbuntu, 'btn btn-primary' : isUbuntu}" 
+									value="Ubuntu" 
+									ng-click="setClicked('Ubuntu');myTemplate='/ubuntu.html'" />
+						</div>
+						<div class="col-md-4">
+							<input 	type="button" 
+									ng-class="{'btn btn-default' : !isCentOS, 'btn btn-primary' : isCentOS}" 
+									value="Cent OS"
+									ng-click="setClicked('CentOS');myTemplate='/centOS.html'" />
+						</div>
+						<div class="col-md-4">
+							<input 	type="button" 
+									ng-class="{'btn btn-default' : !isWindows, 'btn btn-primary' : isWindows}" 
+									value="Windows"
+									ng-click="setClicked('Windows');myTemplate='/windows.html'" />
+						</div>		
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<br/>							
+						</div>
+					</div>
+					<div class="row">		
+						<div class="col-md-offset-2 col-md-8 col-md-offset-2" ng-include src="myTemplate"></div>
+					</div>		
+				</div>
+			</div>			
+		</div>
+		<script type="text/ng-template" id="/ubuntu.html">
+  			
+  				<div class="btn-group">
+  					<input 	type="button" class="btn btn-default" value="12.04" />
+  					<input 	type="button" class="btn btn-default" value="13.04" />
+  					<input 	type="button" class="btn btn-default" value="14.04" />	
+  				</div>
+		</script>
+		<script type="text/ng-template" id="/centOS.html">
+  			<div class="row">
+  				<div class="col-md-6">
+  					<input 	type="button" class="btn btn-default" value="6.1" />	
+  				</div>
+  				<div class="col-md-6">
+  					<input 	type="button" class="btn btn-default" value="6.3" />	
+  				</div>  				
+  			</div>
+		</script>
+		<script type="text/ng-template" id="/windows.html">			
+  			<div class="row">  				
+  				<div class="col-md-6">
+  					<input 	type="button" class="btn btn-default" value="Windows 7" />	
+  				</div>
+  				<div class="col-md-6">
+  					<input 	type="button" class="btn btn-default" value="Windows 8" />	
+  				</div>  				
+  			</div>
+		</script>
+	</body>		
+</html>
