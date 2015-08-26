@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp">
+	<head>
+		<title>Recipe 02 example 01</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\js\bootstrap.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap-theme.css"></link>
+		<script type="text/javaScript">
+			angular.module("MyApp",[]);
+			(function(){
+				angular.module("MyApp").controller("myCtrl",myCtrl);
+				angular.module("MyApp").controller("StudentCtrl",StudentCtrl);
+				angular.module("MyApp").directive("parentClass",parentClass);
+				angular.module("MyApp").directive("childClass",childClass);
+				
+				function parentClass(){
+					var obj = {		
+						restrict : 'EA',
+						controller : "StudentCtrl",
+						scope : true						
+					}
+					
+					return obj;
+				};
+				
+				function childClass(){
+					var obj = {
+						restrict : 'EA',
+						require : "^parentClass",
+						scope : {
+							array : '='
+						},
+						template : "<ol><li ng-repeat='student in array'>{{student}}</li></ol>",
+						link : function(scope,element,attrs,someCtrl){						
+								
+						}
+					}
+					
+					return obj;
+				}
+				
+				function myCtrl($scope){					
+					$scope.studentList = ["Tom Cruise","Jammy Watson","Simon Colins"]					
+				};
+				
+				function StudentCtrl($scope){
+					$scope.studentList = ["Shahrukh Khan","Salmaan Khan","Amir Khan"]
+					
+				};
+				
+			})();
+		</script>
+	</head>
+	<body>
+		<div class="container" ng-controller="myCtrl">
+			<div class="well">
+				<div parent-class>
+					<b>Parent Directive</b>
+					<div child-class array="studentList"></div>
+				</div>
+				<pre />
+				<b>Outside Directive</b>
+				<ul>
+					<li ng-repeat="student in studentList">{{student}}</li>
+				</ul>
+			</div>
+		</div>
+	</body>		
+</html>
