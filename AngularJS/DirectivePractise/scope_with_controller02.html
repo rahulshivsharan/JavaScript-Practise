@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp">
+	<head>
+		<title>Example 7</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\js\bootstrap.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap-theme.css"></link>
+		<script type="text/javaScript">
+			angular.module("MyApp",[]);
+			(function(){
+				angular.module("MyApp").controller("HollywoodCtrl",HollywoodCtrl);
+				angular.module("MyApp").controller("BollywoodCtrl",BollywoodCtrl);
+				angular.module("MyApp").directive("parentClass",parentClass);
+				
+				
+				function parentClass(){
+					var obj = {		
+						restrict : 'EA',
+						controller : "BollywoodCtrl",
+						scope : true,	
+						template : "<ol><li ng-repeat='actor in actorList'>{{actor}}</li></ol>",
+						link : function(scope,element,attrs,someCtrl){	
+							var actorList = scope.actorList, count = 0;
+							
+							for(count = 0;count < actorList.length; count++){
+								console.log(" -+- "+actorList[count]);		
+							}							
+						}
+					}
+					
+					return obj;
+				};
+
+				
+				function HollywoodCtrl($scope){					
+					$scope.actorList = ["Jim Carrey","Sean Connery","Tom Cruise","Samuel L Jackson","Colin Firth"]					
+				};
+				
+				function BollywoodCtrl($scope){
+					$scope.actorList = ["Shahrukh Khan","Salmaan Khan","Amir Khan"]					
+				};
+				
+			})();
+		</script>
+	</head>
+	<body>
+		<div class="container" ng-controller="HollywoodCtrl">
+			<div class="well">
+				<b>Bollywood Actors</b>
+				<parent-class></parent-class>
+				<pre />
+				<b>Hollywood Actors</b>
+				<ul>
+					<li ng-repeat="actor in actorList">{{actor}}</li>
+				</ul>
+			</div>
+		</div>
+	</body>		
+</html>
