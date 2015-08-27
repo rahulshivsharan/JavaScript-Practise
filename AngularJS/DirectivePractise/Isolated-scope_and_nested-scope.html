@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp">
+	<head>
+		<title>Recipe 02 example 01</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\js\bootstrap.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap-theme.css"></link>
+		<script type="text/javaScript">
+			angular.module("MyApp",[]);
+			(function(){
+				angular.module("MyApp").controller("MyCtrl",MyCtrl);
+				angular.module("MyApp").controller("ActorCtrl",ActorCtrl);
+				angular.module("MyApp").directive("duplicateContainer",duplicateContainer);
+				angular.module("MyApp").directive("actorContainer",actorContainer);
+				angular.module("MyApp").directive("dummyContainer",dummyContainer);
+				
+				function actorContainer(){					
+					var obj = {
+						restrict : "EA",
+						controller : "ActorCtrl",
+						scope : true							
+					}
+					
+					return obj;
+				};
+				
+				function duplicateContainer(){
+					var templateString = "<input type='text' ng-model='actorName' />" +
+										"<h4 style='color : blue'>Actor is <b>{{actorName}}</b></h4>";
+					var obj = {
+						restrict : "EA",
+						require : "^actorContainer",							
+						template : templateString,
+						link : function(scope,element,attrs,someCtrl){
+							console.log("  +  "+scope.actorName);
+						}
+					}
+					
+					return obj;
+				}
+				
+				function dummyContainer(){
+					var templateString = "<input type='text' ng-model='actorName' />" +
+										"<h4 style='color : red'>Actor is <b>{{actorName}}</b></h4>";
+					var obj = {
+						restrict : "EA",						
+						scope : true,						/* If you comment this line, scope will be false, and this directive will use scope from controller */		
+						template : templateString,
+						link : function(scope,element,attrs,someCtrl){
+							console.log("  +  "+scope.actorName);
+						}
+					}
+					
+					return obj;
+				}
+				
+				function ActorCtrl($scope){
+					$scope.actorName = "Megan Fox";
+				}
+				
+				function MyCtrl($scope){
+					$scope.actorName = "Tom Cruise";
+				}		
+				
+			})();
+		</script>
+	</head>
+	<body ng-controller="MyCtrl">
+		<div class="container">
+			<br/>
+			<div class="well">
+				<div actor-container>					
+					<div duplicate-container></div>
+				</div>
+				<br/>
+				<div dummy-container></div>
+				<br/>
+				<h4>Actor from MyCtrl is <b>{{actorName}}</b></h4>
+			</div>
+		</div>
+	</body>		
+</html>
