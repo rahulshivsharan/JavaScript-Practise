@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Recipe 02 example 01</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\js\bootstrap.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap-theme.css"></link>
+		<script type="text/javaScript">
+			angular.module("MyApp",[]);
+			(function(){
+				angular.module("MyApp").controller("MyCtrl",MyCtrl);
+				angular.module("MyApp").directive("simpleDirective",simpleDirective);
+				
+				function MyCtrl($scope){
+					$scope.myCtrlObj = new Object();					
+					$scope.myCtrlObj.localName = "John Wayne";
+				};
+				
+				function simpleDirective(){
+					var templatStr = "<div class='alert alert-warning'>"+
+											"<h3>This is Toggle Example....</h3>" + 
+									  "</div>";
+					return {
+						restrict : "EA",
+						template : templatStr,	
+						replace : true,	
+						link : function(scope,elem,attr){
+							
+							scope.showMe = function(){
+								if (elem.hasClass("alert-success") === true){
+									elem.removeClass("alert-success");
+									elem.addClass("alert-warning");
+								}else{
+									elem.removeClass("alert-warning");
+									elem.addClass("alert-success");
+								}								
+							};
+							
+						}
+					}
+				}
+			})();
+		</script>
+	</head>
+	<body>
+		<div ng-app="MyApp" ng-controller="MyCtrl" class="container">
+			<div class="page-header">
+				<h3>This is Directive Practise</h3>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<input type='button' class='btn btn-primary' value="Click-Me" ng-click='showMe()' />
+					<br/>
+					<simple-directive></simple-directive>
+				</div>
+			</div>	
+		</div>
+	</body>		
+</html>
