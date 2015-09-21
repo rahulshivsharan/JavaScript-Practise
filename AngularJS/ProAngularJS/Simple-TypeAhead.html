@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MyApp">
+	<head>
+		<title>Type a head example</title>
+		<script type="text/javaScript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javaScript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<script type="text/javaScript" src="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\js\bootstrap.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap-theme.css"></link>
+		
+		<style type="text/css">
+			div.con{
+				margin-top : 0px;
+				padding-top : 0px;
+			}
+		
+			div.con p{
+				margin-bottom : 0px;
+				margin-top : 0px;
+				padding-left : 10px;
+			}
+		</style>
+		<script type="text/javaScript">
+			angular.module("MyApp",[]);
+			(function(){
+				angular.module("MyApp").controller("myCtrl",myCtrl);
+				function myCtrl($scope){
+					$scope.mainObj = {}
+					var o = $scope.mainObj;
+					o.studentList = [	"Rahul Shivsharan",
+										"Rohit Shetty",
+										"Abhyankar Gulabrao",
+										"Sumit Singh",
+										"Shivaji Rao",
+										"Mehul Choudhari",
+										"Valkot Nixon",
+										"Jitesh Shah",
+										"Anthony D'Silva",
+										"Rony Gibson",
+										"Peter Kamble"];
+				}	
+			})();
+		</script>
+	</head>
+	<body>
+		<div class="container" ng-controller="myCtrl">
+			<div class="page-header">
+				<h4>Type Ahead Example...</h4>
+			</div>
+			<div class="row">
+				<div class="col-md-2">
+					<input type="text" id="myTxt" placeholder="Search here" class="form-control" ng-model="mainObj.name" />
+					<div class="con" ng-show="mainObj.name">
+						<p ng-repeat="student in mainObj.studentList | filter : mainObj.name" ng-click="mainObj.name = student">{{student}}</p>
+					</div>
+				</div>
+			<div>
+		</div>
+	</body>		
+</html>
