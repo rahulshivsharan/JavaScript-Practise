@@ -25,3 +25,39 @@ var fn105 = function(){
 }
 	
 fn105();
+
+var fn106 = function(){
+		var studentList = [ {age : 34, name : "Vipul Chaudhari"},
+							{age : 14, name : "Hemant Kubal"},
+							{age : 23, name : "Dinesh Joshi"},
+							{age : 10, name : "Saurabh Nikam"},
+							{age : 26, name : "Aslam Shaikh"}];
+		
+		for(var x = 0; x < studentList.length; x++){
+			print((x+1)+"> Name : "+studentList[x].name+", age : "+studentList[x].age);
+		}
+		
+		function sortByAge(student1,student2){
+			return student1.age - student2.age;
+		}
+		
+		function sortByName(student1,student2){
+			return (student1.name > student2.name) ? 1 : (student1.name < student2.name) ? -1 : 0;
+		}
+		
+		studentList.sort(sortByAge);
+		
+		print("\n\n ");
+		for(var x = 0; x < studentList.length; x++){
+			print((x+1)+"> Name : "+studentList[x].name+", age : "+studentList[x].age);
+		}
+		
+		studentList.sort(sortByName);
+		
+		print("\n\n ");
+		for(var x = 0; x < studentList.length; x++){
+			print((x+1)+"> Name : "+studentList[x].name+", age : "+studentList[x].age);
+		}
+}
+	
+fn106();
