@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+	<head>
+		<title>Recipe 02 example 01</title>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\AngularJS\angular.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\jQuery\jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="C:\Dump\Installer\jsencrypt-master\jsencrypt-master\bin\jsencrypt.js"></script>
+		<script type="text/javascript" src="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\js\bootstrap.js"></script>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap.css"></link>
+		<link rel="stylesheet" href="D:\Rahul Shivsharan\JavaScript-Framework\BootstrapCSS\bootstrap-3.2.0-dist\css\bootstrap-theme.css"></link>
+		
+		<script type="text/javascript">
+			(function(){
+				angular.module("myApp",[]);				
+				angular.module("myApp").controller("myCtrl",myCtrl);
+				angular.module("myApp").service("EncryptService",EncryptService);
+				
+				function EncryptService(){
+					var encrypt = new JSEncrypt();					
+					return encrypt;
+				}
+				
+				myCtrl.$inject = ["$scope","EncryptService"];
+				
+				function myCtrl($scope,EncryptService){
+					var vm = this;
+					vm.myfile = undefined;
+					vm.publicKeyTxt = undefined;
+					vm.privateKeyTxt = undefined;
+					vm.data = "";
+					vm.encryptedData = "";
+					vm.decryptedData = "";					
+					
+					vm.openFile = function(e){
+						var input = e.target;						
+						
+						try{
+							var reader = new FileReader();						
+							
+							reader.onloadend = function() {
+								vm.publicKeyTxt = reader.result;
+								EncryptService.setPublicKey(vm.publicKeyTxt);	
+							};
+
+							reader.readAsText(input.files[0]);
+						}catch(e){
+							console.log("Error Occured");
+						}						
+					}
+					
+					vm.openFile2 = function(e){
+						var input = e.target;						
+						
+						try{
+							var reader = new FileReader();						
+							
+							reader.onloadend = function() {
+								vm.privateKeyTxt = reader.result;		
+								EncryptService.setPrivateKey(vm.privateKeyTxt);	
+							};
+
+							reader.readAsText(input.files[0]);
+						}catch(e){
+							console.log("Error Occured");
+						}						
+					}
+					
+					vm.publicKeyFile = function(){
+						vm.content = vm.publicKeyTxt;
+					}
+					
+					vm.privateKeyFile = function(){
+						vm.content = vm.privateKeyTxt;
+					}
+					
+					vm.encrypt = function(){
+						vm.encryptedData = EncryptService.encrypt(vm.data);
+					}
+					
+					vm.decrypt = function(){
+						vm.decryptedData = EncryptService.decrypt(vm.encryptedData);
+					}
+				}
+			})();
+		</script>
+	</head>
+	<body ng-controller="myCtrl as vm">
+		<div class="container">
+			<div class="page-header">
+				<h3>Encrypt/Decrypt File</h3>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					Public Key : <input type="file" ng-model="vm.myfile"  ng-blur="vm.openFile($event)"  />					
+				</div>
+				<div class="col-md-2" style="padding-left:0;margin-left:0;align-content:left">
+					<button type="button" ng-click="vm.publicKeyFile()">Select File</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-8">
+					Private Key : <input type="file" ng-model="vm.myfile"  ng-blur="vm.openFile2($event)"  />					
+				</div>
+				<div class="col-md-2" style="padding-left:0;margin-left:0;align-content:left">
+					<button type="button" ng-click="vm.privateKeyFile()">Select File</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<p>{{vm.content}}</p>				
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<input type="text" ng-model="vm.data" /> 
+				</div>
+				<div class="col-md-2">
+					<input type="button" value="Encrypt" ng-click="vm.encrypt()" /> 
+				</div>
+				<div class="col-md-2">
+					<input type="button" value="Decrypt" ng-click="vm.decrypt()" /> 
+				</div>				
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<p>{{vm.encryptedData}}</p>
+				</div>				
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<p>{{vm.decryptedData}}</p>
+				</div>				
+			</div>
+		</div>	
+	</body>		
+</html>
+
+
