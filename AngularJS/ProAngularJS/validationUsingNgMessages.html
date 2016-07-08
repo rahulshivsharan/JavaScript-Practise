@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+	<head>
+		<title>Validator Examples</title>
+		<script type="text/javascript" src="/home/rahul/Installers/jquery-3.0.0.js"></script>	
+		<script type="text/javascript" src="/home/rahul/Installers/angular.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-messages.js"></script>
+		
+		<script type="text/javascript" src="/home/rahul/Installers/Bootstrapv3.0.2/js/bootstrap.js"></script>
+		
+		<link rel="stylesheet" href="/home/rahul/Installers/Bootstrapv3.0.2/css/bootstrap.css">
+		<link rel="stylesheet" href="/home/rahul/Installers/Bootstrapv3.0.2/css/bootstrap-theme.css">
+		
+		
+		<script type="text/javascript">
+		    angular.module("myApp",['ngMessages']);
+			angular.module("myApp").controller("myCtrl",myCtrl);
+			function myCtrl(){
+				var vm = this;
+				vm.formOne = {}
+				vm.formOne.name = "";
+				vm.formOne.address = "";				
+				vm.formOne.age = 0;
+
+				vm.formTwo = {}
+				vm.formTwo.name = "";
+				vm.formTwo.address = "";				
+				vm.formTwo.age = 0;
+			}
+		</script>
+		<style type="text/css">
+			.form-error{
+				color : red;
+			}
+		</style>
+	</head>
+	<body ng-controller="myCtrl as vm">
+		<div class="container">
+			<div class="page-header">
+				<h3>Validator Examples</h3>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-md-offset-2">
+					<div class="page-header">
+						<h5><b>ngForm Validator Examples</b></h5>
+					</div>
+					<form name="formOne" novalidate>
+						<div class="form-group">
+							<input type="text" class="form-control" name="name1" placeholder="Name" required ng-model="vm.formOne.name"
+							 minlength="5" maxlength="10" />
+							<div ng-show="formOne.$submitted || formOne.name1.$touched">
+								<div ng-show="formOne.name1.$error.required" class="form-error">Name can't be empty</div>
+								<div ng-show="formOne.name1.$error.minlength" class="form-error">Name can't be less than 5</div>
+								<div ng-show="formOne.name1.$error.maxlength" class="form-error">Name can't be more than 10</div>
+							</div>	
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" name="address1" placeholder="Address" ng-model="vm.formOne.address"
+							 required />
+							<div ng-show="formOne.$submitted || formOne.address1.$touched">
+								<div ng-show="formOne.address1.$error.required" class="form-error">Address can't be empty</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="number" class="form-control" name="age1" placeholder="Age" ng-model="vm.formOne.age"
+							 required number/>
+							<div ng-show="formOne.$submitted || formOne.age1.$touched">
+								<div ng-show="formOne.age1.$error.required" class="form-error">Age can't be empty</div>
+								<div ng-show="formOne.age1.$error.number" class="form-error">Age should be numeric</div>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+			</div><!-- row -->
+			<div class="row">
+				<div class="col-md-4 col-md-offset-2">
+					<div class="page-header">
+						<h5><b>ngForm ngMessages Validator Examples</b></h5>
+					</div>
+					<form name="formTwo" novalidate>
+						<div class="form-group">
+							<input type="text" class="form-control" name="name1" placeholder="Name"
+							ng-model="vm.formTwo.name" required ng-minlength="5" ng-maxlength="10" />
+							<div ng-messages="formTwo.name1.$error" 
+							ng-show="formTwo.$submitted || formTwo.name1.$touched" class="form-error" role="alert">
+								<div ng-message="required">Name can't be empty</div>
+								<div ng-message="minlength">Name can't be less than 5</div>
+								<div ng-message="maxlength">Name can't be more than 10</div>				
+							</div>	
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" name="address1" placeholder="Address" ng-model="vm.formTwo.address"
+							 required  />
+							<div ng-messages="formTwo.address1.$error"
+							 ng-show="formTwo.$submitted || formTwo.address1.$touched" class="form-error">
+								<div ng-message="required">Name can't be empty</div>								
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="number" class="form-control" name="age1" placeholder="Age" ng-model="vm.formTwo.age"
+							 required number />
+							<div ng-messages="formTwo.age1.$error" ng-show="formTwo.$submitted || formTwo.age1.$touched"
+							  class="form-error">
+								<div ng-message="required">Age can't be empty and should be numeric</div>
+								<div ng-message="number">Age should be numeric</div>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+			</div><!-- row -->
+		</div>
+	</body>		
+</html>
