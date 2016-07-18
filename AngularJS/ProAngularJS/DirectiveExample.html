@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Template</title>
+		
+		<script type="text/javascript" src="/home/rahul/Installers/jquery-3.0.0.js"></script>	
+		<link rel="stylesheet" type="text/css" href="/home/rahul/Installers/Bootstrapv3.0.2/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="/home/rahul/Installers/Bootstrapv3.0.2/css/bootstrap-theme.css">
+		<script type="text/javascript" src="/home/rahul/Installers/Bootstrapv3.0.2/js/bootstrap.js"></script>
+		<script type="text/javascript" src="/home/rahul/Installers/angular.js"></script>
+		
+		<script type="text/javascript">
+		    angular.module("app",[]);
+			angular.module("app").controller("myctrl",myctrl);
+			angular.module("app").controller("childCtrl",childCtrl);
+			angular.module("app").directive("loadFilms",loadFilms);
+
+			myctrl.$inject = ["$scope"];
+			childCtrl.$inject = ["$scope"];
+
+			function myctrl($scope){
+				var vm = this;
+				vm.title = "Directive and nested scoping";
+				vm.actorName = "Amithabh Bachhan";
+				$scope.year = ["70's","80's","90's"];
+			}
+
+			function childCtrl($scope){
+				var vm = this;
+				
+				vm.selectedYear = "";
+				
+				vm.moviesObj = {
+					"70's" : ["Anand","Lawaris","Kala Pathhar","Deewar","Amar Akbar Anthony","Mili"],
+					"80's" : ["Sharabi","Kaalia","Silsila","Satte Pe Satta","Nastik","Shahensha"],
+					"90's" : ["Hum","Aaj Ka Arjun", "Ajooba","Khuda Gawah","Ganga Jamuna Saraswati","Lal Badshah"]
+				}
+				
+				vm.movies = [];
+				
+				vm.getMovies = function(){
+					vm.movies = vm.moviesObj[vm.selectedYear];
+				}
+			}
+
+			function loadFilms(){
+				return {
+					restrict : "EA",
+					controller : "childCtrl",
+					controllerAs : "vm",
+					scope : true,
+					template : function(tElem, tAttrs){
+						var str = "<select ng-model='vm.selectedYear' data-ng-options='y as y for y in year' " + "class='form-control' ng-change='vm.getMovies()'>" + 
+						"<option value=''>Select</option>" + 
+						"</select>" +
+						"<br />" + 
+						"<ol class='slide-animate-container'>" + 
+						"	<li class='slide-animate' ng-repeat='m in vm.movies'>{{m}}</li>"+
+						"</ol>";
+						return str;
+					}
+				} 
+			}
+		</script>
+	</head>
+	<body>
+		<div ng-app="app" ng-controller="myctrl as vm" class="container">
+			<div class="page-header">
+				<h3>{{vm.title}}</h3>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="page-header">
+						<h5>{{vm.actorName}}</h5>						
+					</div>						
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6" load-films></div>	
+			</div>
+		</div>
+	</body>		
+</html>
