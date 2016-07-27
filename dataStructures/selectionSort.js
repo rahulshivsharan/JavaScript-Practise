@@ -45,7 +45,7 @@ function selectionSort(inputArray){
 //console.log(selectionSort([1,31,26,4,3,12]));
 //console.log(selectionSort([5,6,1,2,3,4]));
 
-// Improved Selection Sort
+// Improved version of Selection Sort
 // the improved version of code is based on code review of the above written code which
 // I got from url as follows,
 // http://codereview.stackexchange.com/questions/135937/selection-sort-algorithm-examination
@@ -54,7 +54,7 @@ function selectionSort01(inputArray){
 	var temp = 0;
 	var swapElementIndex = 0;
 	for(var i = 0; i < inputArray.length; i++){
-		minNum = inputArray[i];
+		minNum = inputArray[i]; // got the first min number
 		for(var currentIndex = (i+1); currentIndex < inputArray.length; currentIndex++){
 			if(inputArray[currentIndex] < minNum){
 				minNum = inputArray[currentIndex];
