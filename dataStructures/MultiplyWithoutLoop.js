@@ -25,5 +25,11 @@ function multiply01(num,toNum){
 	}
 }
 
+// more improved and smart coding 
+function multiply02(num,toNum){
+	return num / (1/toNum);
+}
+
+
 console.log(multiply01(15,-5));
 console.log(multiply(15,-5));
