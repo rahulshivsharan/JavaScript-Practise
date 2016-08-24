@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>MultiApp</title>
+		<script type="text/javascript" src="/home/rahul/Installers/jquery-3.0.0.js"></script>	
+		<script type="text/javascript" src="/home/rahul/Installers/angular.js"></script>
+		<script type="text/javascript" src="/home/rahul/Installers/Bootstrapv3.0.2/js/bootstrap.js"></script>		
+		<link rel="stylesheet" type="text/css" href="/home/rahul/Installers/Bootstrapv3.0.2/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="Installers/Bootstrapv3.0.2/css/bootstrap-theme.css">		
+		<script type="text/javascript">
+		    angular.module("myApp",[]);
+			angular.module("myApp").controller("myCtrl",myCtrl);
+			
+			angular.module("myApp2",[]);
+			angular.module("myApp2").controller("myCtrl2",myCtrl2);
+			
+			myCtrl.$inject = ["$scope"];
+			myCtrl2.$inject = ["$scope"];
+			
+			
+			
+			function myCtrl($scope){
+				var vm = this;	
+				$scope.movies = ["Anand","Lawaris","Kala Pathhar","Deewar","Amar Akbar Anthony","Mili"]
+				vm.myFirstCar = "suzuki swift";
+				$scope.title = "Jiocloud";
+				vm.title = "Jiocloud XXX";
+			}
+			
+			function myCtrl2($scope){
+				var vm = this;	
+				$scope.movies = ["Anand","Lawaris","Kala Pathhar","Deewar","Amar Akbar Anthony","Mili"]
+				vm.myFirstCar = "suzuki swift";
+				$scope.title = "Jiocloud";
+				vm.title = "Jiocloud XXX";
+			}
+		</script>
+	</head>
+	<body>	
+		<div class="container" id="myApp1" ng-controller="myCtrl as vm">
+			<div class="page-header">
+				<h3>{{title}} {{vm.title}}</h3>
+			</div>
+			<div class="row">
+				<div class="col-md-5">
+					<ol>
+						<li ng-repeat="movie in movies">{{movie}}</li>
+					</ol>
+					{{vm.myFirstCar}}
+				</div>
+			</div>			
+		</div>
+		<div class="container" id="myApp2" ng-controller="myCtrl2 as vm">
+			<div class="page-header">
+				<h3>{{title}} {{vm.title}}</h3>
+			</div>
+			<div class="row">
+				<div class="col-md-5">
+					<ol>
+						<li ng-repeat="movie in movies">{{movie}}</li>
+					</ol>
+					{{vm.myFirstCar}}
+				</div>
+			</div>			
+		</div>
+		<script type="text/javascript">
+			angular.bootstrap(document.getElementById("myApp1"),["myApp"]);
+			angular.bootstrap(document.getElementById("myApp2"),["myApp2"]);
+		</script>
+	</body>		
+</html>
