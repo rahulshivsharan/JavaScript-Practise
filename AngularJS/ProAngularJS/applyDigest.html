@@ -1,0 +1,45 @@
+<html ng-app="myApp">
+	<head>
+		<title>Apply Digest</title>		
+
+		<script type="text/javascript" src="/home/rahul/Installers/angular.js"></script>		
+		<script type="text/javascript" src="/home/rahul/Installers/jquery-3.0.0.js"></script>
+		<script type="text/javascript" src="/home/rahul/Installers/Bootstrapv3.0.2/js/bootstrap.js"></script>
+
+		<link 	rel="stylesheet" href="/home/rahul/Installers/Bootstrapv3.0.2/css/bootstrap.min.css">		
+		<link 	rel="stylesheet" href="/home/rahul/Installers/Bootstrapv3.0.2/css/bootstrap-theme.min.css">				
+	</head>
+	<body ng-controller="myCtrl">
+		<div class="container">
+			<div class="page-header">
+				<h3>{{title}}</h3>				
+			</div>
+			<div class="row">
+				<div class="col-md-5">
+					<span style="font-size:20em"><i>{{num}}</i></span>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			angular.module("myApp",[]);
+			angular.module("myApp").controller("myCtrl",myCtrl);
+			myCtrl.$inject = ["$scope"];
+			function myCtrl($scope){
+				$scope.title = "$scope and apply watch";
+				$scope.num = 0;
+				var ONE_SECOND = 1000;
+				
+				setInterval(function() {
+					var d = new Date();
+					console.log($scope.num+", ["+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+"]");
+					
+					$scope.$apply(function(){						
+						$scope.num++;	
+					});
+					
+				}, ONE_SECOND);
+			}
+		</script>		
+	</body>
+</html>
