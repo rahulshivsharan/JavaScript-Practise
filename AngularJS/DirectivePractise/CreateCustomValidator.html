@@ -1,0 +1,129 @@
+<html ng-app="myApp">
+	<head>
+		<title>Custom Angular Angular Application</title>		
+
+		<script type="text/javascript" src="/home/rahul/Installers/angular.js"></script>		
+		<script type="text/javascript" src="/home/rahul/Installers/jquery-3.0.0.js"></script>
+		<script type="text/javascript" src="/home/rahul/Installers/Bootstrapv3.0.2/js/bootstrap.js"></script>
+
+		<link rel="stylesheet" href="/home/rahul/Installers/Bootstrapv3.0.2/css/bootstrap.min.css">		
+		<link rel="stylesheet" href="/home/rahul/Installers/Bootstrapv3.0.2/css/bootstrap-theme.min.css">	
+		
+		<style type="text/css">
+			.form_error{
+				color : red;
+			}
+		</style>
+	</head>
+	<body ng-controller="myCtrl">
+		<div class="container">
+			<div class="page-header">
+				<h3>{{title}}</h3>
+			</div>
+			<div class="col-md-6">
+				
+				<form class="form-horizontal" name="sampleForm" ng-submit="sampleForm.$valid &&  vm.create()" novalidate>
+					<div class="form-group">
+						<label class="col-md-3 control-label" for="sampleName">Enter Name</label>
+						<div class="col-md-9">
+							<input type="text" id="sampleName" name="sampleName" class="form-control" ng-model="vm.sampleName" required />
+							<div ng-show="sampleForm.$submitted || sampleForm.sampleName.$touched" class="form_error">
+								<div ng-show="sampleForm.sampleName.$error.required">Name is Required</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-3 control-label" for="sampleAge">Enter Age</label>
+						<div class="col-md-9">
+							<input type="number" id="sampleAge" name="sampleAge" class="form-control" ng-model="vm.sampleAge" required min="18" max="35" />
+							<div ng-show="sampleForm.$submitted || sampleForm.sampleAge.$touched" class="form_error">
+								<div ng-show="sampleForm.sampleAge.$error.required">Age is Required</div>
+								<div ng-show="sampleForm.sampleAge.$error.number">enter numberic</div>
+								<div ng-show="sampleForm.sampleAge.$error.min">value between 18 to 35</div>
+								<div ng-show="sampleForm.sampleAge.$error.max">value between 18 to 35</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-md-3 control-label" for="sampleEmails">Enter Email Id's</label>
+						<div class="col-md-9">
+							<input 	type="text" id="emails" name="sampleEmails" class="form-control" 
+								   	ng-model="vm.sampleEmails" required is-valid-email />							
+							<div ng-show="sampleForm.$submitted || sampleForm.sampleEmails.$touched" class="form_error">
+								<div ng-show="sampleForm.sampleEmails.$error.required">Email Id is Required</div>							
+								<div ng-show="!sampleForm.sampleEmails.$error.required && sampleForm.sampleEmails.$error.isValidEmail">enter single or comma seperated email Id's</div>
+							</div>
+							<small class="text-muted">You can enter single or comma(,) separated email Id's. Avoid comma after last email Id</small>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-md-offset-3 col-md-9">
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<script type="text/javaScript">
+			angular.module("myApp",[]);
+			angular.module("myApp").controller("myCtrl",myCtrl);
+			angular.module("myApp").directive("isValidEmail",isValidEmail); // direactive used for custom validation
+			
+			myCtrl.$inject = ["$scope"];
+			
+			function myCtrl($scope){
+				$scope.title = "Custom Angular Angular Application";
+				var vm = this;
+				vm.sampleName = ""; 
+				vm.sampleAge = "";
+				vm.sampleEmails = "";
+				
+				vm.create = create;
+				
+				
+				function create(){
+					
+				}
+			}	
+			
+			// direactive used for custom validation
+			function isValidEmail(){
+				return obj = {
+					require : "ngModel",
+					link : linkFn
+				};				
+				
+				function linkFn(scope,elem,attr,ngModel){
+					ngModel.$parsers.unshift(validationFn);
+					
+					function validationFn(value){
+						var isValid = true,
+							emails = undefined,
+							re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+						if(angular.isDefined(value)){
+							emails = value.split(",");
+							for(var x = 0; x < emails.length; x++){
+								if(!re.test(emails[x])){
+									isValid = false;
+									break;
+								}else{
+									continue;
+								}
+							}
+						}else{
+							isValid = false;
+						}
+						ngModel.$setValidity("isValidEmail",isValid);
+						return value;
+					} // validationFn
+					
+				} // linkFn
+			} // isValidEmail
+		</script>
+	</body>
+</html>
