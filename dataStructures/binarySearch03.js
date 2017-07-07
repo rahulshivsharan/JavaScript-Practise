@@ -84,5 +84,5 @@ function binary_search(numberArray, numberToSearch, lowIndex, maxIndex){
 	
 	}
 
-	return binary_search_2(numberArray, numberToSearch, lowIndex, maxIndex);
+	return binary_search(numberArray, numberToSearch, lowIndex, maxIndex); // recursive call
 } // end of method binary_search_2
