@@ -1,0 +1,457 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>ES06 Practise</title>
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.5.4/rxjs.umd.min.js"></script>
+		<script type="text/javaScript">
+			(function(){
+				var mainFn = mainFn;
+				
+				$(document).ready(mainFn);	
+				
+				function mainFn(){
+					var ex01 = ex01;
+					var ex02 = ex02;
+					var ex03 = ex03;
+					var ex04 = ex04;
+					var ex05 = ex05;
+					var ex06 = ex06;
+					var ex07 = ex07; 
+					var ex08 = ex08; 
+					var ex09 = ex09;
+					var ex10 = ex10;
+					var ex11 = ex11;
+					var ex12 = ex12;
+					var ex121 = ex121;
+					var ex13 = ex13;
+					
+					//ex01();	
+					//ex02();
+					//ex03();
+					//ex04();
+					//ex05();
+					//ex06();
+					//ex07();
+					//ex08();
+					//ex09(); // need to improvise	
+					//ex10();	
+					//ex11();	
+					//ex12();
+					//ex121();
+					ex13();
+					
+					function ex01(){
+						var fn = fn;
+						console.log("INIT ASYNC");
+						
+						fn().then(function(response){
+							console.log(response);
+						});
+						console.log("DONE ASYNC");
+						
+						async function fn(){
+							var promise = new Promise(function(resolve,reject){
+								setTimeout(function(){
+									resolve("GOT RESPONSE");
+								},5000);
+							});
+							return await promise; 
+						} // end of fn
+					} // end of ex01
+					
+					function ex02(){
+						var fn = fn;
+						console.log("INIT ASYNC");
+						
+						fn().then(function(list){
+							$.each(list,function(index,data){
+								console.log("Country "+data["name"]);
+							});
+						}).catch(function(resp){
+							console.log("Error ",resp.responseText);
+						}).finally(function(){
+							console.log("DONE ASYNC");
+						});
+						
+						
+						async function fn(){
+							var promise = new Promise(function(resolve,reject){
+								$.ajax({
+									url : "https://restcountries.eu/rest/v2/name/iy",
+									dataType : "json",
+									method : "GET",
+									success : function(data){
+										resolve(data);
+									},
+									error : function(data){
+										reject(data);
+									}
+								});
+							});
+							return await promise; 
+						} // end of fn
+					} // end of ex02
+
+
+					function ex03(){
+						var observable = new rxjs.Observable(function(observer){
+							setTimeout(function(){
+								observer.next("Hello from next TICK");
+							},2000);
+						});
+						
+						observable.subscribe(function(value){
+							console.log(value);
+						});
+					} // end of ex03	
+					
+					function ex04(){
+						var observable = new rxjs.Observable(function(observer){
+							$.ajax({
+								url : "https://restcountries.eu/rest/v2/name/iy",
+								dataType : "json",
+								method : "GET",
+								success : function(data){
+									observer.next(data);
+								},
+								error : function(data){
+									observer.next(data);
+								}
+							});
+						});
+						
+						observable.subscribe(function(value){
+							console.log(value);
+						});
+					} // end of ex04
+					
+					function ex05(){
+						var intervalObserver = new rxjs.Observable(function(observer){
+							var count = 0;
+							var promise = setInterval(function(){
+								count++;
+								observer.next(count);
+							},500);							
+							var fn = fn;							
+							return fn; // return a function reference so that Observer returns the facility to kill the promise
+							
+							/* Stoping the promise */
+							function fn(){
+								console.log("STOPING THE TICK");
+								clearInterval(promise);
+							}
+						});
+						
+						var subscription = intervalObserver.subscribe(function(value){
+							console.log("TICK ",value);
+						});
+						
+						setTimeout(function(){
+							subscription.unsubscribe();
+						},5000);
+					} // end of ex05
+					
+					function ex06(){
+						
+						var observable = new rxjs.Observable(function(observer){
+							setTimeout(function(){
+								observer.next(2);
+							},2000);
+						});
+						
+						/*
+						observable.subscribe(function(value){
+							console.log(value);
+						});
+						*/
+						var map = rxjs.operators.map;
+						
+						observable.pipe(map(function(value){
+							console.log("INSIDE MAP");
+							return (value * value);
+						})).subscribe(function(value){
+							console.log("INSIDE SUBSCRIBE . . .. ");
+							console.log(value);
+						});												
+					} // end of fn06
+					
+					
+					function ex07(){
+						var map = rxjs.operators.map;
+						
+						var observable = new rxjs.Observable(function(observer){
+							$.ajax({
+								url : "https://restcountries.eu/rest/v2/name/us",
+								dataType : "json",
+								method : "GET",
+								success : function(data){
+									observer.next(data);
+								},
+								error : function(data){
+									observer.next(data);
+								}
+							});
+						});
+												
+						observable.pipe(map(function(value){							
+							var arr = value.map(function(obj){
+								return obj["name"];
+							});
+							return arr;
+						})).subscribe(function(value){							
+							console.log(value);
+						});												
+					} // end of fn07
+					
+					function ex08(){
+						var map = rxjs.operators.map;
+						var paramArray = ["ab","si","pr","na","jp","se"];
+						var observable = undefined;
+
+						observable = new rxjs.Observable(function(observer){
+							$.each(paramArray,function(index,param){
+								$.ajax({
+									url : "https://restcountries.eu/rest/v2/name/"+param,
+									dataType : "json",
+									method : "GET",
+									success : function(data){
+										observer.next(data);
+									},
+									error : function(data){
+										observer.next(data);
+									}
+								}); // ajax
+							}); // each
+						}); // oberservable
+												
+						
+						
+						observable.pipe(map(function(value){							
+							var arr = value.map(function(obj){
+								return obj["name"];
+							});
+							return arr;
+						})).subscribe(function(value){							
+							console.log(value);
+						});
+											
+					} // end of fn08
+					
+					/*
+					function ex09(){
+						var map = rxjs.operators.map;
+						var paramArray = ["ab","si","pr","na","jp","se"];
+						var observable = undefined;
+						
+						observable = new rxjs.Observable(function(observer){
+							$.each(paramArray,function(index,param){
+								$.ajax({
+									url : "https://restcountries.eu/rest/v2/name/"+param,
+									dataType : "json",
+									method : "GET",
+									success : function(data){
+										observer.next(data);
+									},
+									error : function(data){
+										observer.next(data);
+									}
+								}); // ajax
+							}); // each
+						}); // oberservable
+												
+						
+						observable.pipe(map(function(value){							
+							var arr = value.map(function(obj){
+								return obj["alpha2Code"];
+							});							
+							return arr;
+						})).subscribe(function(value){							
+							console.log(value);
+						});
+						
+						// Not working
+						observable.pipe(map(function(value){							
+							var arr = value.map(function(obj){
+								return obj["alpha2Code"];
+							});
+							console.log("ARR "+arr);
+							return arr;
+						})).pipe(function(value){
+							console.log("PIPED ",value);
+							var observable = new rxjs.Observable(function(observer){
+								$.each(value,function(index,code){
+									$.ajax({
+										url : "https://restcountries.eu/rest/v2/alpha/"+code,
+										dataType : "json",
+										method : "GET",
+										success : function(data){
+											observer.next(data);
+										},
+										error : function(data){
+											observer.next(data);
+										}
+									}); // ajax
+								}); // end of each							
+							});
+							return observable;
+						}).pipe(map(function(value){							
+							var arr = value.map(function(obj){
+								return obj["alpha2Code"];
+							});
+							return arr;
+						})).subscribe(function(value){
+							console.log(value);
+						});
+						// Not working
+						
+					} // end of fn09
+					*/
+					
+					function ex10(){						
+						rxjs.operators.map(function(x){
+							return x * x;
+						})(rxjs.of(2,4,6)).subscribe(function(val){
+							console.log("VAL "+val);
+						});						
+					} // end of ex10
+					
+					function ex11(){						
+						rxjs.operators.first()(rxjs.of(12,43,6)).subscribe(function(val){
+							console.log("VAL "+val);
+						});						
+					} // end of ex11
+					
+					function ex12(){
+						let count = 0;
+						let obs = new rxjs.Observable(function(observer){
+							let promse = setInterval(function(){
+								count++;
+								observer.next(count);
+							},500);
+							
+							return function(){
+								console.log("STOP !!!!");
+								clearInterval(promse)
+							};
+						});
+						
+						let subcription = obs.subscribe(function(val){
+							console.log("TICK ",val);
+						});
+						
+						setTimeout(function(){
+							console.log("Going to STOP.....");
+							subcription.unsubscribe();
+						},5000);
+					} // end of ex12
+					
+					function ex121(){
+						var fnOne = fnOne;
+						var map = rxjs.operators.map;
+						
+						console.log("START....");
+						
+						let obs = new rxjs.Observable(function(observer){
+							setTimeout(function(){
+								observer.next(10)
+							},1000);
+						});
+						
+						obs.pipe(
+							map(fnOne)
+						).subscribe(function(fn){
+							console.log("FINAL ");
+							fn.call();
+						});
+						
+						function fnOne(val){						
+							console.log(val);
+							
+							let obs = new rxjs.Observable(function(observer){
+								setTimeout(function(){
+									observer.next(100)
+								},1000)
+							});
+							
+							return function(){
+								obs.subscribe(function(val){
+									console.log(val);
+								});
+							};
+						}; // end of fnOne
+					} // end of ex121
+					
+					function ex13(){
+						var fnOne = fnOne;
+						var fnTwo = fnTwo;
+						var fnThree = fnThree;						
+						var finalFn = finalFn;
+						
+						var map = rxjs.operators.map;
+						
+						console.log("START....");
+						
+						let obs = new rxjs.Observable(function(observer){
+							setTimeout(function(){
+								observer.next(10)
+							},1000);
+						});
+						
+						obs.pipe(map(function(){
+							return obs;
+						})).pipe(map(finalFn))
+							.pipe(map(fnOne))
+							.pipe(map(finalFn))
+							.pipe(map(fnTwo))
+							.pipe(map(finalFn))
+							.pipe(map(fnThree))
+							.subscribe(finalFn);
+						
+						function fnOne(){
+						
+							let obs = new rxjs.Observable(function(observer){
+								setTimeout(function(){
+									observer.next(100);
+								},2000);
+							});
+							
+							return obs;
+						};
+						
+						function fnTwo(){	
+							let obs = new rxjs.Observable(function(observer){
+								setTimeout(function(){
+									observer.next(200);
+								},3000);
+							});
+							
+							return obs;
+						}
+						
+						function fnThree(){	
+							let obs = new rxjs.Observable(function(observer){
+								setTimeout(function(){
+									observer.next(300);
+								},4000);
+							});			
+
+							return obs;	
+						}
+						
+						function finalFn(obs){
+							obs.subscribe(function(val){
+								console.log("RESOLVED "+val);
+							});
+						} // end of finalFn
+						
+					} // end of ex13
+					
+				} // end of mainFn
+			})();
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>  
