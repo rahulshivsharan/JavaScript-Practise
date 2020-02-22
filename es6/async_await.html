@@ -1,0 +1,95 @@
+<html>
+	<head>
+		<title>Async-Await</title>		
+		<script  src="https://code.jquery.com/jquery-2.2.4.min.js"  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.2/handlebars.min.js"></script>	
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>	
+		<script type="text/javaScript">
+		(function(){
+			var main = main;
+
+			$(document).ready(main);
+
+			/*
+				Main function
+			*/
+			function main(){
+				var fn = fn;
+				var url = undefined;
+				var theTemplateScript = $("#country-template").html();				
+  				var theTemplate = Handlebars.compile(theTemplateScript);
+
+				$("#btn").click(function(){
+					url = "https://restcountries.eu/rest/v2/name/" + $("#searchTxt").val();
+
+					fn().then(function(resp){
+						console.log(resp);
+						 var theCompiledHtml = theTemplate({ "country_list" : resp });
+						 $("#content-holder").html(theCompiledHtml);
+					},function(err){
+						console.log(err);
+					}).catch(function(err){
+						console.log(err);
+					});
+
+					console.log("Done !!!");
+				});
+
+				async function fn(){
+					var promiseFunc = promiseFunc;
+					var promise = new Promise(promiseFunc);
+					return await promise;
+
+					function promiseFunc(resolve, reject){
+						$.get(url).then(function(resp){
+							resolve(resp)
+						},function(err){
+							reject(err);
+						});
+					} // end of promiseFunc
+				}
+			} // end of main
+		})();
+		</script>
+	</head>
+	<body>
+		<input type="text" id="searchTxt" /><button type="button" id="btn">Enter</button>	
+		<br>
+		<div id="content-holder"></div>
+	</body>	
+
+	<!--Data will be inserted in its according place, replacing the brackets.-->
+	<script id="country-template" type="text/x-handlebars-template">	  
+	  <table class="table table-striped">
+	  	<thead class="thead-dark">
+		  	<tr>
+		  		<th style="text-align:center">Name</th>
+		  		<th style="text-align:center">Code</th>
+		  		<th style="text-align:center">Capital</th>
+		  		<th style="text-align:center">region</th>
+		  		<th style="text-align:center">Sub-Region</th>
+		  		<th style="text-align:center">Flag</th>	
+		  	</tr>
+	  	</thead>
+	  	<tbody>
+		  	{{#each country_list}}	
+		  		<tr scope="row">
+		  			<td align="center">{{this.name}}</td>
+		  			<td align="center">{{this.alpha2Code}}</td>	
+		  			<td align="center">{{this.capital}}</td>
+		  			<td align="center">{{this.region}}</td>		
+		  			<td align="center">{{this.subregion}}</td>		  		
+		  			<td align="center"><img src={{this.flag}} atl={{this.name}} height="60" width="110" /></td>		  		
+		  		</tr>	  		
+		  	{{/each}}
+	  	</tbody>
+	  </table>
+	</script>
+</html>
