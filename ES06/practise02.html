@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>ES06 Practise</title>
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.5.4/rxjs.umd.min.js"></script>
+		<script type="text/javaScript">
+			(function(){
+				var mainFn = mainFn;
+				
+				$(document).ready(mainFn);	
+				
+				function mainFn(){
+					var ex01 = ex01;
+
+					ex01();
+					
+					function ex01(){
+						var fn1 = fn1;
+						var fn2 = fn2;
+						var fn3 = fn3;
+						var fn4 = fn4;
+						var finalFn = finalFn;
+
+						var map = rxjs.operators.map;
+
+						console.log("START....");
+
+						var obs = new rxjs.Observable(function(observer){
+							setTimeout(function(){
+								observer.next("10");
+							},1000);
+						});
+
+						obs.pipe(map(function(){
+							return obs;
+						})).pipe(map(finalFn))
+							.pipe(map(fn1))
+							.pipe(map(finalFn))
+							.pipe(map(fn2))
+							.pipe(map(finalFn))
+							.pipe(map(fn3))
+							.pipe(map(finalFn))
+							.pipe(map(fn4))
+							.subscribe(finalFn);
+
+
+						function fn1(){
+							var obs = new rxjs.Observable(function(observer){
+								setTimeout(function(){
+									observer.next("100");
+								},1000);
+							});
+
+							return obs;
+						}
+
+						function fn2(){
+							var obs = new rxjs.Observable(function(observer){
+								setTimeout(function(){
+									observer.next("1,000");
+								},1000);
+							});
+							return obs;
+						}
+
+						function fn3(){
+							var obs = new rxjs.Observable(function(observer){
+								setTimeout(function(){
+									observer.next("10,000");
+								},1000);
+							});
+							return obs;	
+						}
+
+						function fn4(){
+							var obs = new rxjs.Observable(function(observer){
+								setTimeout(function(){
+									observer.next("1,00,000");
+								},1000);
+							});
+
+							return obs;
+						}
+
+						function finalFn(obs){
+							obs.subscribe(function(val){
+									console.log("RESOLVED "+val);
+							});
+						} // end of finalFn
+					}					
+				} // end of mainFn
+			})();
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>  
