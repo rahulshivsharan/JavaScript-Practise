@@ -25,6 +25,18 @@
 				const APPLE = { color : "Red", shape : "Round", size : "Small", type : "Fruit" };
 				const {type,color} = APPLE;
 				console.log("Some APPLE Object properties are \""+type+"\" and \""+color+"\"");
+
+
+				let fn01 = () => { 
+					let myArray = [1,2,3,4,5,6]; 
+					
+					let [,var_2,,var_4,,var_6] = myArray; 
+
+					return [var_2,var_4,var_6];
+				}  
+
+				[,var_two,var_three] = fn01();
+				console.log("var_two "+var_two+", var_three "+var_three);
 			})();
 		</script>
 	</head>
