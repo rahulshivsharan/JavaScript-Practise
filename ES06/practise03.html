@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>ES06 Practise</title>		
+		<script type="text/javaScript">
+			(function(){								
+				const sum = function(a,b){
+					return a + b;
+				}
+				
+				const multiplication = function(a,b){
+					return a * b;
+				}
+
+				// Higher-order function
+				const getResultOperation = function(operationFn){
+					return function(a,b){
+						return `The ${operationFn.name} of ${a} and ${b} is ${operationFn(a,b)}`
+					}
+				}
+
+				const getSumResult = getResultOperation(sum);
+				const getMultiplicationResult = getResultOperation(multiplication);
+
+				console.log(getSumResult(2,5));
+				console.log(getMultiplicationResult(12,5));
+			})();
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>  
