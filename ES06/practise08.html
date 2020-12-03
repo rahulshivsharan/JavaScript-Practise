@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>ES06 Practise</title>		
+		<script type="text/javaScript">
+			(function(){								
+				var Compute = function(){
+					var obj = {
+						add : function(val){
+							this.finalVal += val;							
+							return this; 
+						},
+						mult : function(val){
+							this.finalVal *= val;							
+							return this;
+						},
+						finalVal : 0
+					}
+					return obj;
+				}
+
+				let val = 0;
+				val = Compute().add(5).mult(3).add(20).finalVal;
+				console.log(val);
+
+
+				var AddNum = function(val){
+					var fn = fn;
+					
+					fn["final"] = 0;
+					fn["final"] += val;
+
+					return fn;
+
+					function fn(){	
+						for(let i = 0; i < arguments.length; i++){
+							fn["final"] += arguments[i];
+						}					
+
+						return fn;
+					}
+				}
+
+				console.log(AddNum(2)(3)(4)(5).final);
+			})();
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>  
