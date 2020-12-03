@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>ES06 Practise</title>		
+		<script type="text/javaScript">
+			(function(){
+				var Compute = function(fn){
+					return {
+						fold : fn,
+						map : function(callbackFn){
+							var innerFn = innerFn;
+							return Compute(innerFn);
+
+							function innerFn(props){
+								return callbackFn(fn(props));
+							}
+						}
+					}
+				}; // end of Compute
+
+				var Add = function(obj){
+					let total = (obj["total"] !== undefined && !Number.isNaN(obj["total"])) ? obj["total"] : 0;
+					total += obj["num"];
+					return {
+						"num" : obj["num"],
+						"total" : total
+					}
+				}
+
+				var computeObj = Compute(Add);
+				var obj = computeObj.map(Add).map(Add);
+				var o = obj.fold({
+					"num" : 6
+				});
+
+				console.log(o);
+
+			})();
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>  
