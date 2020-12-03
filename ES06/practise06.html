@@ -17,10 +17,11 @@
 
 				
 				let num1, num2, num3;				
+				
 				({ num1, num2, num3 } = { 
-					num1 : "One", 
-					num2 : "Two", 
-					num3 : "Three"
+					"num1" : "One", 
+					"num2" : "Two", 
+					"num3" : "Three"
 				});
 
 				console.log("\"num1\" : "+num1+", \"num2\" : "+num2+", \"num3\" "+num3);
@@ -32,9 +33,30 @@
 					"val3" : 33
 				}
 
-				const { val1 : p1, val3 : p3 } = objectValueOne;
+				const { "val1" : p1, "val3" : p3 } = objectValueOne;
 				
 				console.log("\"p1\" "+p1+", \"p3\" "+p3);
+
+				//const {a = 10, b = 5}  = {a : 3}
+
+				const user_Object = {
+					id : 42,
+					name : "Rahul",
+					profession : "Coder",
+					country : "India"
+				}
+
+				function getUserId({id}){
+					return "The userId is \""+id+"\"";
+				}
+
+				function getProfession({name,profession}){
+					return `${name} is working as ${profession}`;
+				}
+
+				console.log(getUserId(user_Object));
+				console.log(getProfession(user_Object));
+				
 			})();
 		</script>
 	</head>
